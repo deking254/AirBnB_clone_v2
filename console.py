@@ -155,8 +155,7 @@ class HBNBCommand(cmd.Cmd):
 
         # Create and save the instance based on storage type
         storage_type = os.getenv('HBNB_TYPE_STORAGE')
-        new_instance = self.classes[class_name](**obj_kwargs) if\
-            storage_type == 'db' else self.classes[class_name]()
+        new_instance = self.classes[class_name](**obj_kwargs) if storage_type == 'db' else self.classes[class_name]()
         if storage_type == 'db':
             if 'id' not in obj_kwargs:
                 obj_kwargs['id'] = str(uuid.uuid4())
