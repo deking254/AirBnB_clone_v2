@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 """"the storage engne for the database"""
 import os
-from models.base_model import Base
-from models.city import City
-from models.state import State
 from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker, scoped_session
 class DBStorage:
@@ -13,6 +10,7 @@ class DBStorage:
 
     def __init__(self):
         """the inital function when DBstorage is initialized"""
+        from models.base_model import Base
         user = os.getenv("HBNB_MYSQL_USER", default="")
         passwd = os.getenv("HBNB_MYSQL_PWD", default="")
         host = os.getenv("HBNB_MYSQL_HOST", default="localhost")
@@ -26,6 +24,12 @@ class DBStorage:
 
     def all(self, cls=None):
         """the function that queries the database for the cls entered"""
+        from models.city import City
+        from models.state import State
+        from models.amenity import Amenity
+        from models.user import User
+        from models.place import Place
+        from models.review import Review
         objs = {}
         if cls == None:
             objs_arr = self.__session.query().all()
@@ -85,6 +89,7 @@ class DBStorage:
 
     def reload(self):
         """create all tables and create session"""
+        from models.base_model import Base
         Base.metadata.create_all(self.__engine)
         self.__session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Scopped_sess = scoped_session(self.__session)
