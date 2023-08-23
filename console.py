@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import datetime
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -114,17 +115,54 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
-        if not args:
+        """Create an object of any class"""
+
+        # Attributes to ignore when setting object attributes
+        ignored_attrs = ('id', 'created_at', 'updated_at', '__class__')
+
+        # Extract class name and arguments from input
+        class_name = ''
+        class_match = re.match(r'(?P<name>[a-zA-Z_][a-zA-Z_\d]*)', args)
+        obj_kwargs = {}
+
+        if class_match:
+            class_name = class_match.group('name')
+            params_str = args[len(class_name):].strip()
+            param_pattern = (
+                r'([a-zA-Z_][a-zA-Z_\d]*)=('
+                r'"(?:[^"]|\\")*"|[-+]?\d+\.\d+|[-+]?\d+)'
+                )
+            params = re.findall(param_pattern, params_str)
+
+            for key, value in params:
+                value = value[1:-1].replace('_', ' ') if value.startswith('"')\
+                    else float(value) if '.' in value else int(value)
+                obj_kwargs[key] = value
+
+        else:
+            class_name = args
+
+        # Check if class_name is valid
+        if not class_name:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        if class_name not in self.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
+
+        # Create and save the instance based on storage type
+        storage_type = os.getenv('HBNB_TYPE_STORAGE')
+        new_instance = self.classes[class_name](**obj_kwargs) if\
+            storage_type == 'db' else self.classes[class_name]()
+        if storage_type == 'db':
+            if 'id' not in obj_kwargs:
+                obj_kwargs['id'] = str(uuid.uuid4())
+            if 'created_at' not in obj_kwargs:
+                obj_kwargs['created_at'] = str(datetime.now())
+            if 'updated_at' not in obj_kwargs:
+                obj_kwargs['updated_at'] = str(datetime.now())
+        new_instance.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
