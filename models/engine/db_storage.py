@@ -28,52 +28,51 @@ class DBStorage:
         """the function that queries the database for the cls entered"""
         objs = {}
         if cls == None:
-            objs_arr = self.__session.query().all())
+            objs_arr = self.__session.query().all()
             for obj in objs_arr:
-                objs.update(obj.to_dict()['__class__'] + '.' + obj.id: obj)
+                objs.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
             return (objs)
-
         else:
             if cls == 'State':
                 objs = {}
                 objs_arr = self.__session.query(State).all()
-            	for obj in objs_arr:
-                	objs.update(obj.to_dict()['__class__'] + '.' + obj.id: obj)
-            	return (objs)
+                for obj in objs_arr:
+                    objs.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+                return (objs)
             if cls == 'City':
                 objs = {}
                 objs_arr = self.__session.query(City).all()
                 for obj in objs_arr:
-                    objs.update(obj.to_dict()['__class__'] + '.' + obj.id: obj)
+                    objs.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
                 return (objs)
             if cls == 'User':
                 objs = {}
                 objs_arr = self.__session.query(User).all()
                 for obj in objs_arr:
-                    objs.update(obj.to_dict()['__class__'] + '.' + obj.id: obj)
+                    objs.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
                 return (objs)
             if cls == 'Amenity':
                 objs = {}
                 objs_arr = self.__session.query(Amenity).all()
                 for obj in objs_arr:
-                    objs.update(obj.to_dict()['__class__'] + '.' + obj.id: obj)
+                    objs.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
                 return (objs)
             if cls == 'Place':
                 objs = {}
                 objs_arr = self.__session.query(Place).all()
                 for obj in objs_arr:
-                    objs.update(obj.to_dict()['__class__'] + '.' + obj.id: obj)
+                    objs.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
                 return (objs)
             if cls == 'Review':
                 objs = {}
                 objs_arr = self.__session.query(Review).all()
                 for obj in objs_arr:
-                    objs.update(obj.to_dict()['__class__'] + '.' + obj.id: obj)
+                    objs.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
                 return (objs)
 
     def new(self, obj):
         """add the object to the current database session"""
-        self.all().update(obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
 
     def save(self):

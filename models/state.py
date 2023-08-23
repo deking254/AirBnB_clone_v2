@@ -10,7 +10,7 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=True)
     cities = relationship('City', back_populates='state', cascade='all, delete-orphan')
 
-    @cities.getter
+    @property
     def cities(self):
         """the getter for cities objects using filestorage"""
         return (self.cities)

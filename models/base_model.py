@@ -26,7 +26,7 @@ class BaseModel:
                                                       '%Y-%m-%dT%H:%M:%S.%f')
             del kwargs['__class__']
             self.__dict__.update(kwargs)
-            self..name = kwargs.name
+            self.name = kwargs.name
 
     def __str__(self):
         """Returns a string representation of the instance"""
