@@ -23,7 +23,6 @@ new_location="server {\n\t
         location / {\n\t
                 # First attempt to serve request as file, then\n\t\t
                 # as directory, then fall back to displaying a 404.\n\t\t
-                #try_files $uri $uri/ =404;
                 add_header X-Served-By $HOSTNAME;\n\t
         }\n
         location /redirect_me {\n\t\t
