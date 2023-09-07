@@ -61,33 +61,34 @@ def deploy():
     except Exception as e:
         return (False)
 
+
 @task
 def do_clean(number=0):
-        """deletes out-of-date archives, using the function"""
-        loc = 'ls -t /data/web_static/releases/ | grep .tgz'
-        r = "/data/web_static/releases/"
-        t = 'test -d {}'
-        with lcd('versions'):
-            try:
-                archives = local('ls -t', capture=True).split('\n')
-                print(archives)
-                if number == 0 or int(number) == 0:
-                    number = 1
-                if len(archives) >= int(number):
-                    new = archives[int(number):]
-                    if len(new) > 0:
+    """deletes out-of-date archives, using the function"""
+    loc = 'ls -t /data/web_static/releases/ | grep .tgz'
+    r = "/data/web_static/releases/"
+    t = 'test -d {}'
+    with lcd('versions'):
+        try:
+            archives = local('ls -t', capture=True).split('\n')
+            print(archives)
+            if number == 0 or int(number) == 0:
+                number = 1
+            if len(archives) >= int(number):
+                new = archives[int(number):]
+                if len(new) > 0:
+                    for n in new:
+                        local('rm ' + n)
+                    print("removed all local files")
+                    archives = run(loc, capture=True).split('\n')
+                    if number == 0 or int(number) == 0:
+                        number = 1
+                    if len(archives) >= int(number):
+                        new = archives[int(number):]
                         for n in new:
-                            local('rm ' + n)
-                        print("removed all local files")
-                        archives = run(loc, capture=True).split('\n')
-                        if number == 0 or int(number) == 0:
-                            number = 1
-                        if len(archives) >= int(number):
-                            new = archives[int(number):]
-                            for n in new:
-                                folder = r + n.split('.')[0]
-                                if run(t.format(folder)).succeeded:
-                                    run('rm -rf {}'.format(folder))
-                            run('ls -l /data/web_static/releases/')
-            except Exception as e:
-                print(e)
+                            folder = r + n.split('.')[0]
+                            if run(t.format(folder)).succeeded:
+                                run('rm -rf {}'.format(folder))
+                        run('ls -l /data/web_static/releases/')
+        except Exception as e:
+            print(e)
