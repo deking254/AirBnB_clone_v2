@@ -9,6 +9,7 @@ directory = final_name.partition('.')[0]
 env.hosts = ['100.27.10.6', '54.236.25.48']
 env.user = 'ubuntu'
 
+
 @task
 def do_pack():
     """script that generates a .tgz archive"""
