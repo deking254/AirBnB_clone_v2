@@ -11,7 +11,7 @@ def do_pack():
     if os.path.exists("versions/" + final_name):
         return ("versions/" + final_name)
     else:
-	try:
+        try:
             local("mkdir -p versions")
             local("tar -cvzf versions/" + final_name + " ./web_static")
             return ("versions/" + final_name)
