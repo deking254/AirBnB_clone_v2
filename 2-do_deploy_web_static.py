@@ -25,11 +25,11 @@ def do_pack():
         except Exception as e:
             return (None)
 
-"""
+
 @task
 @needs_host
-def do_deploy(archive_path):
-    function to deploy a compressed webm
+def do_depiloy(archive_path):
+    """function to deploy a compressed webm"""
     fl = archive_path.partition("/")[-1]
     f = fl.partition('.')[0]
     r = "/data/web_static/releases/"
@@ -49,7 +49,6 @@ def do_deploy(archive_path):
             return (False)
     else:
         return (False)
-"""
 
 
 @task
