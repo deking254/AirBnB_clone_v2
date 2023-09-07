@@ -6,8 +6,8 @@ import datetime
 name = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 final_name = 'web_static_' + name + ".tgz"
 directory = final_name.partition('.')[0]
-env.hosts = ['ubuntu@100.27.10.6', 'ubuntu@54.236.25.48']
-
+env.hosts = ['100.27.10.6', '54.236.25.48']
+env.user = 'ubuntu'
 
 @task
 def do_pack():
@@ -36,7 +36,7 @@ def do_deploy(archive_path):
             run("sudo rm -rf " + r + d + "/web_static")
             run("sudo rm -rf /data/web_static/current")
             run("sudo ln -s " + r + d + " " + "/data/web_static/current")
-            print("New version deployed!")
+            return (True)
         except Exception as e:
             return
     else:
