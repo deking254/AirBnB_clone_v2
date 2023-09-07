@@ -9,7 +9,6 @@ d = final_name.partition('.')[0]
 env.hosts = ['100.27.10.6', '54.236.25.48']
 env.user = 'ubuntu'
 
-
 @task
 def do_pack():
     """script that generates a .tgz archive"""
@@ -45,6 +44,7 @@ def do_deploy(archive_path):
             run("sudo ln -s " + r + f + " " + "/data/web_static/current")
             return (True)
         except Exception as e:
+            print("error")
             return (False)
     else:
         return (False)
