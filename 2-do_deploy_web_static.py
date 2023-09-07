@@ -12,12 +12,15 @@ env.user = 'ubuntu'
 @task
 def do_pack():
     """script that generates a .tgz archive"""
-    local("mkdir -p versions")
-    local("tar -cvzf versions/" + final_name + " ./web_static")
     if os.path.exists("versions/" + final_name):
         return ("versions/" + final_name)
     else:
-        return (None)
+        try:
+            local("mkdir -p versions")
+            local("tar -cvzf versions/" + final_name + " ./web_static")
+            return ("versions/" + final_name)
+        except Exception as e:
+            return (None)
 
 
 @task
@@ -38,6 +41,6 @@ def do_deploy(archive_path):
             run("sudo ln -s " + r + d + " " + "/data/web_static/current")
             return (True)
         except Exception as e:
-            return
+            return (False)
     else:
         return (False)

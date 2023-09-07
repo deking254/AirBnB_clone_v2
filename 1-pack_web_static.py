@@ -8,9 +8,12 @@ final_name = 'web_static_' + name + ".tgz"
 
 def do_pack():
     """script that generates a .tgz archive"""
-    local("mkdir -p versions")
-    local("tar -cvzf versions/" + final_name + " ./web_static")
     if os.path.exists("versions/" + final_name):
         return ("versions/" + final_name)
     else:
-        return (None)
+	try:
+            local("mkdir -p versions")
+            local("tar -cvzf versions/" + final_name + " ./web_static")
+            return ("versions/" + final_name)
+        except Exception as e:
+            return (None)
