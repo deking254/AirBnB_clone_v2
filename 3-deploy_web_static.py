@@ -27,18 +27,19 @@ def do_pack():
 @needs_host
 def do_deploy(archive_path):
     """function to deploy a compressed web"""
-    filename = archive_path.partition("/")[2]
+    fl = archive_path.partition("/")[2]
+    f = fl.partition('.')[0]
     r = "/data/web_static/releases/"
     if os.path.exists(archive_path):
         try:
             put(archive_path,  "/tmp/")
-            run("sudo mkdir -p /data/web_static/releases/" + d)
-            run("sudo tar -xzf /tmp/" + filename + " " + r + " -C " + d)
-            run("sudo rm /tmp/" + filename)
-            run("sudo mv " + r + d + "/web_static/* " + r + d)
-            run("sudo rm -rf " + r + d + "/web_static")
+            run("sudo mkdir -p /data/web_static/releases/" + f)
+            run("sudo tar -xzf /tmp/" + fl + " -C " + r + f)
+            run("sudo rm /tmp/" + fl)
+            run("sudo mv -r " + r + f + "/web_static/* " + r + f)
+            run("sudo rm -rf " + r + f + "/web_static")
             run("sudo rm -rf /data/web_static/current")
-            run("sudo ln -s " + r + d + " " + "/data/web_static/current")
+            run("sudo ln -s " + r + f + " " + "/data/web_static/current")
             return (True)
         except Exception as e:
             return (False)
