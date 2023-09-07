@@ -5,7 +5,7 @@ from fabric.network import needs_host
 import datetime
 name = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 final_name = 'web_static_' + name + ".tgz"
-directory = final_name.partition('.')[0]
+d = final_name.partition('.')[0]
 env.hosts = ['100.27.10.6', '54.236.25.48']
 env.user = 'ubuntu'
 
@@ -34,7 +34,7 @@ def do_deploy(archive_path):
         try:
             put(archive_path,  "/tmp/")
             run("sudo mkdir -p /data/web_static/releases/" + d)
-            run("sudo tar -xzf /tmp/" + filename + " " + r + " -C " + d)
+            run("sudo tar -xzf /tmp/" + filename + " -C " + r + d)
             run("sudo rm /tmp/" + filename)
             run("sudo mv " + r + d + "/web_static/* " + r + d)
             run("sudo rm -rf " + r + d + "/web_static")
