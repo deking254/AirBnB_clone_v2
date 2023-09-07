@@ -8,6 +8,8 @@ final_name = 'web_static_' + name + ".tgz"
 d = final_name.partition('.')[0]
 env.hosts = ['100.27.10.6', '54.236.25.48']
 env.user = 'ubuntu'
+env.key_filename = '~/.ssh/school'
+
 
 @task
 def do_pack():
@@ -36,9 +38,7 @@ def do_deploy(archive_path):
             run("sudo mkdir -p /data/web_static/releases/" + f)
             run("sudo tar -xzf /tmp/" + fl + " -C " + r + f)
             run("sudo rm /tmp/" + fl)
-            run("sudo rm -r " + r + f + "/images")
-            run("sudo rm -r " + r + f + "/styles")
-            run("sudo mv -f " + r + f + "/web_static/* " + r + f)
+            run("sudo mv -u " + r + f + "/web_static/* " + r + f)
             run("sudo rm -rf " + r + f + "/web_static")
             run("sudo rm -rf /data/web_static/current")
             run("sudo ln -s " + r + f + " " + "/data/web_static/current")
