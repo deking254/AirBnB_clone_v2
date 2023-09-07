@@ -27,7 +27,7 @@ def do_pack():
 @needs_host
 def do_deploy(archive_path):
     """function to deploy a compressed web"""
-    fl = archive_path.partition("/")[2]
+    fl = archive_path.partition("/")[-1]
     f = fl.partition('.')[0]
     r = "/data/web_static/releases/"
     if os.path.exists(archive_path):
