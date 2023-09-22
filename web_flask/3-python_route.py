@@ -21,6 +21,7 @@ def c(text):
     """this is the function that prints hbnb"""
     return "C " + text.replace("_", " ")
 
+
 @app.route("/python", strict_slashes=False)
 @app.route("/python/", strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
