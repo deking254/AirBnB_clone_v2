@@ -42,8 +42,8 @@ def number_template(n):
     """this is the function that prints hbnb"""
     d = '<!DOCTYPE html>\n<HTML lang="en">\n\t<HEAD>\n\t\t'
     b = '<TITLE>HBNB</TITLE>\n\t</HEAD>\n\t<BODY>\n\t\t'
-    n = '<H1>Number: 89</H1>\n\t</BODY>\n</HTML>'
-    s = d + b + n
+    nu = '<H1>Number: {}</H1>\n\t</BODY>\n</HTML>'.format(n)
+    s = d + b + nu
     return render_template_string(s, n=n)
 
 
