@@ -9,7 +9,8 @@ app = Flask(__name__)
 @app.route("/states_list", strict_slashes=False)
 def states():
     """this is the function that prints hello"""
-    states = storage.all('State')
+    print(storage.all())
+    states = [{name:"were", id: 34}]
     return render_template("7-states_list.html", states=states)
 
 
