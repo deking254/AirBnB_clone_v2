@@ -100,4 +100,4 @@ class DBStorage:
         """
         Closes the storage engine
         """
-        self.__session.remove()
+        self.__session.close()
