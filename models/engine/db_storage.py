@@ -43,6 +43,7 @@ class DBStorage:
         """
         objects = dict()
         all_classes = (User, State, City, Amenity, Place, Review)
+        class_dict = {'User': User, 'State': State, 'City': City, 'Amenity': Amenity, 'Place': Place, 'Review': Place}
         if cls is None:
             for class_type in all_classes:
                 query = self.__session.query(class_type)
@@ -50,7 +51,7 @@ class DBStorage:
                     obj_key = f'{obj.__class__.__name__}.{obj.id}'
                     objects[obj_key] = obj
         else:
-            query = self.__session.query(cls)
+            query = self.__session.query(class_dict.get(cls))
             for obj in query.all():
                 obj_key = f'{obj.__class__.__name__}.{obj.id}'
                 objects[obj_key] = obj
