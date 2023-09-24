@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """this program is aimed to..."""
+import os
 from flask.app import Flask
 from flask import render_template
 from models import storage
@@ -9,7 +10,7 @@ app = Flask(__name__)
 @app.route("/cities_by_states", strict_slashes=False)
 def cities_bystate():
     """this is the function that prints hello"""
-    states = storage.all().values()
+        states = storage.all()
     return render_template("8-cities_by_states.html", states=states)
 
 
