@@ -39,7 +39,7 @@ class Place(BaseModel, Base):
     
     # Columns
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False, unique=True)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
         description = Column(String(1024), nullable=True)
