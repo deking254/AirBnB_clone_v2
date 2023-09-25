@@ -6,12 +6,14 @@ from models import storage
 app = Flask(__name__)
 
 
-@app.route("/hbnb_filters", strict_slashes=False)
+@app.route("/hbnb", strict_slashes=False)
 def states():
     """this is the function that prints hello"""
     states = storage.all('State')
     amenities = storage.all('Amenity')
-    return render_template("10-hbnb_filters.html", states=states, amenities=amenities)
+    places = storage.all('Place')
+    users = storage.all('User')
+    return render_template("100-hbnb.html", users=users, states=states, amenities=amenities, places=places)
 
 
 @app.teardown_appcontext
